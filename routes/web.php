@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Controllers\AnimalShelterController;
 use Illuminate\Support\Facades\Route;
-//use App\Http\Controllers\Controller;
 
 Route::get('/', [Controller::class, 'index'])->name('Animal_Shelter.index');
 
-Route::get('/animals', [Controller::class, 'showAnimals'])->name('Animal_Shelter.animals.index');
-Route::post('/animals', [Controller::class, 'storeAnimal'])->name('Animal_Shelter.animals.store');
+Route::get('/animals', [AnimalShelterController::class, 'showAnimals'])->name('Animal_Shelter.animals.index');
+Route::post('/animals', [AnimalShelterController::class, 'store'])->name('animals.store');
 
 Route::get('/applications', [Controller::class, 'showApplications'])->name('Animal_Shelter.applications.index');
 Route::post('/applications', [Controller::class, 'storeApplication'])->name('Animal_Shelter.applications.store');
