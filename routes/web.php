@@ -1,20 +1,29 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Controllers\AnimalShelterController;
+use App\Http\Controllers\ApplicationsController;
+use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
+
+//index, create, store, show, edit, update, destroy
 
 Route::get('/', function(){});
 
-Route::get('/animals', [AnimalShelterController::class, 'showAnimals'])->name('Animal_Shelter.animals.index');
-Route::post('/animals', [AnimalShelterController::class, 'store'])->name('animals.store');
+Route::resource('animals', AnimalShelterController::class)
+    ->only(['index', 'store', 'show', 'create', 'destroy'])
+    ->name('animals');
 
-//Route::get('/applications', [Controller::class, 'showApplications'])->name('Animal_Shelter.applications.index');
-//Route::post('/applications', [Controller::class, 'storeApplication'])->name('Animal_Shelter.applications.store');
+Route::resource('applications', ApplicationsController::class)
+    ->only(['index', 'store', 'show', 'destroy'])
+    ->name('applications');
 
-//Route::get('/news', [Controller::class, 'showNews'])->name('Animal_Shelter.news.index');
-//Route::post('/news', [Controller::class, 'storeNews'])->name('Animal_Shelter.news.store');
+Route::resource('news', NewsController::class)
+    ->only(['index', 'store', 'show', 'destroy'])
+    ->name('news');
 
-//Route::get('/articles', [Controller::class, 'showArticles'])->name('Animal_Shelter.articles.index');
-//Route::post('/articles', [Controller::class, 'storeArticle'])->name('Animal_Shelter.articles.store');
-
+Route::resource('articles', 'ArticlesController') 
+    ->only(['index', 'store', 'show', 'destroy'])
+    ->name('articles');
+    
 ?>

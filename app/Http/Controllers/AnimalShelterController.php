@@ -4,20 +4,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Animals;
 
-class AnimalShelterController extends Controller
-{
-    public function index()
-    {
+class AnimalShelterController extends Controller {
+    public function index(){
         return view('index');
     }
-    public function showAnimals()
-    {
+
+    public function showAnimals() {
         $animals = Animals::all();
         return response()->json($animals);
     }
 
-    public function storeAnimal(Request $request)
-       {
+    public function storeAnimal(Request $request) {
            $request->validate([
                'name' => 'required|string|unique:animals,name',
                'kind_of_animal' => 'required|string',
@@ -27,7 +24,7 @@ class AnimalShelterController extends Controller
 
            if ($request->hasFile('image')) {
                $imagePath = $request->file('image')->store('images', 'public');
-           } //сохранение на сервер
+           }
 
            $animal = animals::class::create([
                'name' => $request->name,
@@ -36,7 +33,16 @@ class AnimalShelterController extends Controller
                'image' => $imagePath ?? null,
            ]);
 
-           return redirect()->back()->with('success', 'Анкета зверушки успешно добавлена!');
+           return redirect()->back()->with('success', 'Анкета успешно добавлена.');
        }
+
+    public function destroy($id) {
+        $animal = Animals::find($id);
+        if ($animal) {
+            $animal->delete();
+            //return response()->json(['success' => 'Анкета успешно удалена.']);
+        }
+        //return response()->json(['error' => 'Анкета не найдена.'], 404);
+    }
 }
 ?>
