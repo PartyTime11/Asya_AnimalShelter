@@ -9,6 +9,6 @@ class animals extends Model
 {
     protected $table = 'animals';
 
-    protected $fillable = array('name','kind_of_animal','age','image');
+    protected $fillable = array('name','kind_of_animal','gender','age','image');
 
 }
