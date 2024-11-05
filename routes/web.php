@@ -17,4 +17,10 @@ Route::post('/news', [Controller::class, 'storeNews'])->name('Animal_Shelter.new
 Route::get('/articles', [Controller::class, 'showArticles'])->name('Animal_Shelter.articles.index');
 Route::post('/articles', [Controller::class, 'storeArticle'])->name('Animal_Shelter.articles.store');
 
+//Route::get('/animals/{kind_of_animal}{id}', [AnimalShelterController::class, 'showAnimal'], function ($kind_of_animal, $id) {
+//    return 'Name: ' . $name . '. Kind of animal: ' . $kind_of_animal . '. Age: ' . $age . '.' . $image;
+//});
+
+Route::get('/animals/{kind_of_animal}/{id}', [AnimalShelterController::class, 'showAnimal']);
+
 ?>

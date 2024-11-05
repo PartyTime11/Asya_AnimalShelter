@@ -11,10 +11,31 @@ class AnimalShelterController extends Controller
     {
         return view('index');
     }
+
     public function showAnimals()
     {
         $animals = Animals::all();
         return response()->json($animals);
+    }
+
+    public function showAnimal($kind_of_animal, $id)
+    {
+        $animal = Animals::where('id', $id)->where('kind_of_animal', $kind_of_animal)->first();
+
+        if (!$animal) {
+            return response()->json(['message' => 'Животное не найдено'], 404);
+        }
+
+        $name = $animal->name;
+        $age = $animal->age;
+        $image = $animal->image; 
+
+        return response()->json([
+            'Name' => $name,
+            'Kind of animal' => $kind_of_animal,
+            'Age' => $age,
+            'Image' => $image,
+        ]);
     }
 
     public function storeAnimal(Request $request)
