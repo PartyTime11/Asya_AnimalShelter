@@ -13,6 +13,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name')->unique();
             $table->string('kind_of_animal');
+            $table->string('gender');
             $table->integer('age');
             $table->string('image')->nullable();
         });
