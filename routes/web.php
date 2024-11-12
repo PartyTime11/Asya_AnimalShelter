@@ -1,10 +1,19 @@
 <?php
+
 namespace App\Http\Controllers;
 use App\Http\Controllers\AnimalShelterController;
+
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [Controller::class, 'index'])->name('Animal_Shelter.index');
+//main routes
+Route::get('/', [Controller::class, 'index'])->name('index');
+//error redirect routes
+Route::get('/404', [Controller::class, 'error404'])->name('error404');
 
+//filter route
+Route::get('/api/animals/filter', [AnimalShelterController::class, 'filter']);
+
+//animals routes
 Route::get('/api/animals', [AnimalShelterController::class, 'showAnimals']);
 Route::get('/api/animals/{kind_of_animal}/{id}', [AnimalShelterController::class, 'showAnimal']);
 Route::post('/api/animals', [AnimalShelterController::class, 'store']);

@@ -1,16 +1,20 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Animals;
+use App\Http\Requests\FilterRequest;
+
 
 class AnimalShelterController extends Controller
 {
-    // public function index(){
-    //     return view('index');
-    // }
+    public function index(){
+         return view('index');
+     }
 
-    // public function index(FilterRequest $request){
+    // public function filter(FilterRequest $request){
     //     $data = $request->validated();
     //     $query = Post::query();
     
@@ -30,7 +34,7 @@ class AnimalShelterController extends Controller
     //     dd($posts);
     // }
 
-    public function index(FilterRequest $request)
+    public function filter(FilterRequest $request)
     {
         $query = Animals::query();
 
@@ -47,7 +51,8 @@ class AnimalShelterController extends Controller
         }
 
         $animals = $query->get();
-        dd($posts);
+        // dd($animals);
+        return response()->json($animals); 
         //return view('animals.index', compact('animals'));
     }
 
