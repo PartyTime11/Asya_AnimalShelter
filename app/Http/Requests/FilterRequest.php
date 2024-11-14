@@ -11,9 +11,13 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kind_of_animal' => 'required|string|in:dog,cat',
-            'gender' => 'required|string|in:male,female',
-            'age' => 'required|integer|min:0',
+            'kind_of_animal' => 'nullable|string|in:dog,cat',
+            'gender' => 'nullable|string|in:male,female',
+            'age' => 'nullable|integer|min:0',
+            'type_of_fur' => 'nullable|string|in:short,long',
+            'colour' => 'nullable|string|in:white,black,grey,brown,ginger,golden',
+            'size' => 'nullable|string|in:small,medium,big',
+            'temper' => 'nullable|string|in:calm,energetic',
         ];
     }
 }
