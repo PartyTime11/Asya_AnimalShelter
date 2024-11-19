@@ -12,6 +12,6 @@ class Controller{
     }
 
     public function error404(){
-        abort(404);
+        return response()->json([ 'error' => 'wrong data' ]); 
     }
 }

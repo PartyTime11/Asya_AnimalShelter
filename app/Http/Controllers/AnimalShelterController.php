@@ -11,50 +11,34 @@ use App\Http\Requests\FilterRequest;
 class AnimalShelterController extends Controller
 {
     public function index(){
+
          return view('index');
-     }
-
-    // public function filter(FilterRequest $request){
-    //     $data = $request->validated();
-    //     $query = Post::query();
-    
-    //     if (isset($data['kind_of_animal'])) {
-    //         $query->where('kind_of_animal','like', "%{$data['kind_of_animal']}%");
-    //     }
-    
-    //     if (isset($data['gender'])) {
-    //         $query->where('gender', $data['gender']);
-    //     }
-    
-    //     if (isset($data['age'])) {
-    //         $query->where('age', $data['age']);
-    //     }
-    
-    //     $posts = $query->get();
-    //     dd($posts);
-    // }
-
-    public function filter(FilterRequest $request)
-    {
-        $query = Animals::query();
-
-        if ($request->has('kind_of_animal') && $request->kind_of_animal != '') {
-            $query->where('kind_of_animal', $request->kind_of_animal);
-        }
-
-        if ($request->has('gender') && $request->gender != '') {
-            $query->where('gender', $request->gender);
-        }
-
-        if ($request->has('age') && $request->age != '') {
-            $query->where('age', $request->age);
-        }
-
-        $animals = $query->get();
-        // dd($animals);
-        return response()->json($animals); 
-        //return view('animals.index', compact('animals'));
     }
+
+    public function filter(FilterRequest $request){
+    $query = Animals::query();
+
+    $filters = [
+        'kind_of_animal',
+        'gender',
+        'age',
+        'size',
+        'colour',
+        'temper',
+        'type_of_fur',
+    ];
+
+    foreach ($filters as $filter) {
+        if ($request->has($filter) && $request->$filter !== '') {
+            $query->where($filter, $request->$filter);
+        }
+    }
+
+    $animals = $query->get();
+
+    return response()->json($animals); 
+    }
+
 
     public function showAnimals()
     {
