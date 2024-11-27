@@ -34,6 +34,11 @@ class AnimalShelterController extends Controller
         }
     }
 
+    if ($request->has('random') && $request->random) {
+        $animal = $query->inRandomOrder()->first();
+        return response()->json($animal);
+    }
+
     $animals = $query->get();
 
     return response()->json($animals); 
