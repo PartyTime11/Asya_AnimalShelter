@@ -16,32 +16,32 @@ class AnimalShelterController extends Controller
     }
 
     public function filter(FilterRequest $request){
-    $query = Animals::query();
+        $query = Animals::query();
 
-    $filters = [
-        'kind_of_animal',
-        'gender',
-        'age',
-        'size',
-        'colour',
-        'temper',
-        'type_of_fur',
-    ];
+        $filters = [
+            'kind_of_animal',
+            'gender',
+            'age',
+            'size',
+            'colour',
+            'temper',
+            'type_of_fur',
+        ];
 
-    foreach ($filters as $filter) {
-        if ($request->has($filter) && $request->$filter !== '') {
-            $query->where($filter, $request->$filter);
+        foreach ($filters as $filter) {
+            if ($request->has($filter) && $request->$filter !== '') {
+                $query->where($filter, $request->$filter);
+            }
         }
-    }
 
-    if ($request->has('random') && $request->random) {
-        $animal = $query->inRandomOrder()->first();
-        return response()->json($animal);
-    }
+        if ($request->has('random') && $request->random) {
+            $animal = $query->inRandomOrder()->first();
+            return response()->json($animal);
+        }
 
-    $animals = $query->get();
+        $animals = $query->get();
 
-    return response()->json($animals); 
+        return response()->json($animals); 
     }
 
 
