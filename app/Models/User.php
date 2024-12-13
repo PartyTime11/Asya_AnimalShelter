@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,4 +21,4 @@ class User extends Authenticatable
     public function setPhoneAttribute($value) {
         $this->attributes['phone'] = preg_replace('/[^0-9]/', '', $value);
     }
-}
+} -->
