@@ -11,5 +11,5 @@ class Animals extends Model
 
     protected $table = 'animals';
 
-    protected $fillable = array('name','kind_of_animal','gender','age','image','temper','colour','type_of_fur','size');
+    protected $fillable = array('name','kind_of_animal','gender','age','image','temper','colour','type_of_fur','size','age_range');
 }
