@@ -12,7 +12,7 @@ class FilterRequest extends FormRequest
     {
         return [
             'kind_of_animal' => 'nullable|string|in:dog,cat',
-            'gender' => 'nullable|string|in:male,female',
+            'gender' => 'nullable|string|in:мальчик,девочка',
             'age' => 'nullable|integer|min:0',
             'type_of_fur' => 'nullable|string|in:short,long',
             'colour' => 'nullable|string|in:white,black,grey,brown,ginger,golden',
