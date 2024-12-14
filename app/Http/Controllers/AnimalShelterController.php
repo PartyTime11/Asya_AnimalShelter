@@ -26,6 +26,7 @@ class AnimalShelterController extends Controller
             'colour',
             'temper',
             'type_of_fur',
+            'age_range'
         ];
 
         foreach ($filters as $filter) {

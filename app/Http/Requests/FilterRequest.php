@@ -17,7 +17,8 @@ class FilterRequest extends FormRequest
             'type_of_fur' => 'nullable|string|in:short,long',
             'colour' => 'nullable|string|in:white,black,grey,brown,ginger,golden',
             'size' => 'nullable|string|in:small,medium,big',
-            'temper' => 'nullable|string|in:calm,energetic',
+            'temper' => 'nullable|string|in:calm,active',
+            'age_range' => 'nullable|string|in:0-5,5-10,10-15'
         ];
     }
 }
