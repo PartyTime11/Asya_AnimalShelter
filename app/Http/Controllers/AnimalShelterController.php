@@ -12,7 +12,7 @@ class AnimalShelterController extends Controller
 {
     public function index(){
 
-         return view('index');
+         return csrf_token(); 
     }
 
     public function filter(FilterRequest $request){

@@ -18,6 +18,10 @@ Route::get('/api/animals', [AnimalShelterController::class, 'showAnimals']);
 Route::get('/api/animals/{kind_of_animal}/{id}', [AnimalShelterController::class, 'showAnimal']);
 Route::post('/api/animals', [AnimalShelterController::class, 'store']);
 
+//auth routes
+// Route::post('/api/register', [AuthController::class, 'register'])->withoutMiddleware('verifyCsrfToken');
+// Route::post('/api/login', [AuthController::class, 'login']);
+
 //Route::get('/applications', [Controller::class, 'showApplications']);
 //Route::post('/applications', [Controller::class, 'storeApplication']);
 

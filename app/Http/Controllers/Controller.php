@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class Controller{
     public function index(){
-        return response('');
+        return csrf_token(); 
     }
 
     public function error404(){
