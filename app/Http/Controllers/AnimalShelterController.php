@@ -10,10 +10,10 @@ use App\Http\Requests\FilterRequest;
 
 class AnimalShelterController extends Controller
 {
-    public function index(){
+    // public function index(){
 
-         return csrf_token(); 
-    }
+    //      return csrf_token(); 
+    // }
 
     public function filter(FilterRequest $request){
         $query = Animals::query();
