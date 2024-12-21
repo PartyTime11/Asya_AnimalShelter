@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -52,13 +51,28 @@ class AuthController extends Controller
         $credentials = $request->only('phone', 'password');
 
         try {
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (!$token = auth()->attempt($credentials)) {
                 return response()->json(['error' => 'Неверные данные.'], 401);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'Ошибка генерации токена.'], 500);
         }
 
-        return response()->json(compact('token'));
+        return $this->respondWithToken($token);
+    }
+     /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }
