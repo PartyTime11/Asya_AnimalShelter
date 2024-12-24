@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+<<<<<<< Updated upstream
+=======
+use Illuminate\Support\Facades\Log;
+>>>>>>> Stashed changes
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
+    public function index(){
+        return csrf_token(); 
+    }
+    
     public function register(Request $request)
     {
         $request->validate([
@@ -43,4 +51,8 @@ class AuthController extends Controller
 
         return response()->json(compact('token'));
     }
+<<<<<<< Updated upstream
 } -->
+=======
+}
+>>>>>>> Stashed changes
