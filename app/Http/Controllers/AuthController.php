@@ -1,40 +1,49 @@
-<!-- <?php
+<?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-<<<<<<< Updated upstream
-=======
 use Illuminate\Support\Facades\Log;
->>>>>>> Stashed changes
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function index(){
-        return csrf_token(); 
-    }
-    
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'phone' => 'required|string|unique:users|regex:/^(\+7|8)\d{10}$/',
-            'password' => 'required|string|min:6',
-        ]);
+        Log::info("Начало обработки валидации");
 
-        $user = User::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $request->validate([
+                'name' => ['required', 'string'],
+                'surname' => ['required', 'string'],
+                'phone' => [
+                    'required',
+                    'string',
+                    'unique:users',
+                    'regex:/^(7|8)\d{10}$/',
+                ],
+                'password' => ['required', 'string', 'min:6']
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['error' => 'Ошибка валидации.'], 422);
+        }
 
-        return response()->json(['message' => 'Пользователь успешно зарегистрирован.',]);
+        Log::info("Окончание обработки валидации");
+
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'phone' => $request->phone,
+                'password' => Hash::make($request->password),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Не удалось создать пользователя.'], 500);
+        }
+
+        return response()->json(['message' => 'Пользователь успешно зарегистрирован.'], 201);
     }
 
     public function login(Request $request)
@@ -42,17 +51,28 @@ class AuthController extends Controller
         $credentials = $request->only('phone', 'password');
 
         try {
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (!$token = auth()->attempt($credentials)) {
                 return response()->json(['error' => 'Неверные данные.'], 401);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'Ошибка генерации токена.'], 500);
         }
 
-        return response()->json(compact('token'));
+        return $this->respondWithToken($token);
     }
-<<<<<<< Updated upstream
-} -->
-=======
+     /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
+    }
 }
->>>>>>> Stashed changes
