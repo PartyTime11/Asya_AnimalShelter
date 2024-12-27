@@ -58,15 +58,16 @@ class AuthController extends Controller
             return response()->json(['error' => 'Ошибка генерации токена.'], 500);
         }
 
-        return $this->respondWithToken($token);
+        $user = auth()->user();
+
+        return response()->json([
+            'token' => $token,
+            'name' => $user->name,
+            'surname' => $user->surname,
+            'phone' => $user->phone 
+        ]);
     }
-     /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     protected function respondWithToken($token)
     {
         return response()->json([
