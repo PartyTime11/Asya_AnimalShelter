@@ -14,7 +14,6 @@ class FavoriteController extends Controller
             'animal_id' => 'required|integer|exists:animals,id',
         ]);
 
-        //(=^･ω･^)y＝
         $existingFavorite = Favorite::where('user_token', $request->token)
             ->where('animal_id', $request->animal_id)
             ->first();
