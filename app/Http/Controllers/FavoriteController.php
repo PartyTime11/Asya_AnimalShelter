@@ -14,6 +14,15 @@ class FavoriteController extends Controller
             'animal_id' => 'required|integer|exists:animals,id',
         ]);
 
+        //(=^･ω･^)y＝
+        $existingFavorite = Favorite::where('user_token', $request->token)
+            ->where('animal_id', $request->animal_id)
+            ->first();
+
+        if ($existingFavorite) {
+            return response()->json(['message' => 'Эта анкета уже добавлена в избранное.'], 409);
+        }
+
         $favorite = Favorite::create([
             'user_token' => $request->token,
             'animal_id' => $request->animal_id,
