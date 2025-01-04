@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Animals;
 use App\Http\Requests\FilterRequest;
-
+use Illuminate\Support\Facades\DB;
 
 class AnimalShelterController extends Controller
 {
