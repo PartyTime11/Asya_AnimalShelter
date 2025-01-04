@@ -23,7 +23,7 @@ Route::post('/api/register', [AuthController::class, 'register']);
 Route::post('/api/login', [AuthController::class, 'login']);
 
 //favorite routes
-Route::post('/api/favorite', [FavoriteController::class, 'addOrDeleteFavorite']);
+Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
 
 //Route::get('/applications', [Controller::class, 'showApplications']);
 //Route::post('/applications', [Controller::class, 'storeApplication']);
