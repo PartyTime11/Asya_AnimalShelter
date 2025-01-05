@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Animals;
 use App\Http\Requests\FilterRequest;
-
+use Illuminate\Support\Facades\DB;
 
 class AnimalShelterController extends Controller
 {
@@ -25,9 +25,28 @@ class AnimalShelterController extends Controller
                          ->where('favorites.user_token', $user_token);
                 })
                 ->select('animals.*', 
-                         DB::raw('CASE WHEN favorites.animal_id IS NOT NULL THEN 1 ELSE 0 END AS liked'))
-                ->get();
+                         DB::raw('CASE WHEN favorites.animal_id IS NOT NULL THEN 1 ELSE 0 END AS liked'));
+                //->get();
     
+            $filters = [
+                'kind_of_animal',
+                'gender',
+                'age',
+                'size',
+                'colour',
+                'temper',
+                'type_of_fur',
+                'age_range'
+            ];
+        
+            foreach ($filters as $filter) {
+                if ($request->has($filter) && $request->$filter !== '') {
+                    $animals->where('animals.' . $filter, $request->$filter); 
+                }
+            }
+        
+            $animals = $animals->get();
+            
             return response()->json($animals);
         } 
 
