@@ -21,6 +21,10 @@ Route::post('/api/animals', [AnimalShelterController::class, 'store']);
 //auth routes
 Route::post('/api/register', [AuthController::class, 'register']);
 Route::post('/api/login', [AuthController::class, 'login']);
+Route::post('/api/logout', [AuthController::class, 'logout']);
+
+//favorite routes
+Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
 
 //favorite routes
 Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
@@ -33,5 +37,6 @@ Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
 
 //Route::get('/articles', [Controller::class, 'showArticles'])->name('Animal_Shelter.articles.index');
 //Route::post('/articles', [Controller::class, 'storeArticle'])->name('Animal_Shelter.articles.store');
+
 
 ?>
