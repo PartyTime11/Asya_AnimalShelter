@@ -21,6 +21,10 @@ Route::post('/api/animals', [AnimalShelterController::class, 'store']);
 //auth routes
 Route::post('/api/register', [AuthController::class, 'register']);
 Route::post('/api/login', [AuthController::class, 'login']);
+Route::post('/api/logout', [AuthController::class, 'logout']);
+
+//favorite routes
+Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
 
 //favorite routes
 Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
