@@ -66,25 +66,20 @@ class AuthController extends Controller
         $request->validate([
             'user_token' => 'required|string',
         ]);
-
+    
         $user_token = $request->input('user_token');
     
-        try {
+        if (auth()->check() && auth()->user()->remember_token === $user_token) {
+            auth()->user()->delete(); 
+            
             auth()->logout();
             return response()->json(['message' => 'Выход.']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Ошибка выхода.'], 500);
+        } else {
+            return response()->json(['error' => 'Неверный токен.'], 401);
         }
     }
-    
 
-     /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     protected function respondWithToken($token)
     {
         return response()->json([
