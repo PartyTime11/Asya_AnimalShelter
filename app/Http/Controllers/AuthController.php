@@ -60,13 +60,26 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
-     /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    public function logout(Request $request)
+    {
+        $request->validate([
+            'user_token' => 'required|string',
+        ]);
+    
+        $user_token = $request->input('user_token');
+    
+        if (auth()->check() && auth()->user()->remember_token === $user_token) {
+            auth()->user()->delete(); 
+            
+            auth()->logout();
+            return response()->json(['message' => 'Выход.']);
+        } else {
+            return response()->json(['error' => 'Неверный токен.'], 401);
+        }
+    }
+
+
     protected function respondWithToken($token)
     {
         return response()->json([
