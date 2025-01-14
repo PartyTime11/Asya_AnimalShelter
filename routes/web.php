@@ -5,8 +5,6 @@ use App\Http\Controllers\AnimalShelterController;
 
 use Illuminate\Support\Facades\Route;
 
-//main routes
-Route::get('/', [Controller::class, 'index'])->name('index');
 //error redirect routes
 Route::get('/404', [Controller::class, 'error404'])->name('error404');
 
@@ -21,7 +19,7 @@ Route::post('/api/animals', [AnimalShelterController::class, 'store']);
 //auth routes
 Route::post('/api/register', [AuthController::class, 'register']);
 Route::post('/api/login', [AuthController::class, 'login']);
-Route::post('/api/logout', [AuthController::class, 'logout']);
+// Route::post('/api/logout', [AuthController::class, 'logout']);
 
 //favorite routes
 Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
