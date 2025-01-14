@@ -1,20 +1,40 @@
 <?php
+
 namespace App\Http\Controllers;
+use App\Http\Controllers\AnimalShelterController;
+
 use Illuminate\Support\Facades\Route;
-//use App\Http\Controllers\Controller;
 
-Route::get('/', [Controller::class, 'index'])->name('Animal_Shelter.index');
+//error redirect routes
+Route::get('/404', [Controller::class, 'error404'])->name('error404');
 
-Route::get('/animals', [Controller::class, 'showAnimals'])->name('Animal_Shelter.animals.index');
-Route::post('/animals', [Controller::class, 'storeAnimal'])->name('Animal_Shelter.animals.store');
+//filter route
+Route::get('/api/animals/filter', [AnimalShelterController::class, 'filter']);
 
-Route::get('/applications', [Controller::class, 'showApplications'])->name('Animal_Shelter.applications.index');
-Route::post('/applications', [Controller::class, 'storeApplication'])->name('Animal_Shelter.applications.store');
+//animals routes
+Route::get('/api/animals', [AnimalShelterController::class, 'showAnimals']);
+Route::get('/api/animals/{kind_of_animal}/{id}', [AnimalShelterController::class, 'showAnimal']);
+Route::post('/api/animals', [AnimalShelterController::class, 'store']);
 
-Route::get('/news', [Controller::class, 'showNews'])->name('Animal_Shelter.news.index');
-Route::post('/news', [Controller::class, 'storeNews'])->name('Animal_Shelter.news.store');
+//auth routes
+Route::post('/api/register', [AuthController::class, 'register']);
+Route::post('/api/login', [AuthController::class, 'login']);
+// Route::post('/api/logout', [AuthController::class, 'logout']);
 
-Route::get('/articles', [Controller::class, 'showArticles'])->name('Animal_Shelter.articles.index');
-Route::post('/articles', [Controller::class, 'storeArticle'])->name('Animal_Shelter.articles.store');
+//favorite routes
+Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
+
+//favorite routes
+Route::post('/api/favorite', [LikedController::class, 'addOrDeleteFavorite']);
+
+//Route::get('/applications', [Controller::class, 'showApplications']);
+//Route::post('/applications', [Controller::class, 'storeApplication']);
+
+//Route::get('/news', [Controller::class, 'showNews'])->name('Animal_Shelter.news.index');
+//Route::post('/news', [Controller::class, 'storeNews'])->name('Animal_Shelter.news.store');
+
+//Route::get('/articles', [Controller::class, 'showArticles'])->name('Animal_Shelter.articles.index');
+//Route::post('/articles', [Controller::class, 'storeArticle'])->name('Animal_Shelter.articles.store');
+
 
 ?>
