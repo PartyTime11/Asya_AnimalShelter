@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Animals;
 use App\Http\Requests\FilterRequest;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AnimalShelterController extends Controller
 {
@@ -17,12 +18,13 @@ class AnimalShelterController extends Controller
 
     public function filter(FilterRequest $request) {
         if ($request->has('user_token') && $request->user_token) {
-            $user_token = $request->user_token;
+            JWTAuth::setToken($request->user_token);
+            $user = JWTAuth::toUser($request->user_token)->id;
     
             $animals = DB::table('animals')
-                ->leftJoin('favorites', function($join) use ($user_token) {
+                ->leftJoin('favorites', function($join) use ($user) {
                     $join->on('animals.id', '=', 'favorites.animal_id')
-                         ->where('favorites.user_token', $user_token);
+                         ->where('favorites.user_id', $user);
                 })
                 ->select('animals.*', 
                          DB::raw('CASE WHEN favorites.animal_id IS NOT NULL THEN 1 ELSE 0 END AS liked'));
@@ -83,12 +85,13 @@ class AnimalShelterController extends Controller
  
     public function showAnimals(FilterRequest $request) {
         if ($request->has('user_token') && $request->user_token) {
-            $user_token = $request->user_token;
+            JWTAuth::setToken($request->input('user_token'));
+            $user = JWTAuth::toUser($request->user_token)->id;
     
             $animals = DB::table('animals')
-                ->leftJoin('favorites', function($join) use ($user_token) {
+                ->leftJoin('favorites', function($join) use ($user) {
                     $join->on('animals.id', '=', 'favorites.animal_id')
-                         ->where('favorites.user_token', $user_token);
+                         ->where('favorites.user_id', $user);
                 })
                 ->select('animals.*', 
                          DB::raw('CASE WHEN favorites.animal_id IS NOT NULL THEN 1 ELSE 0 END AS liked'))
