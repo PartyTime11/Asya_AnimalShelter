@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Favorite;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class FavoriteController extends Controller
 {
@@ -14,7 +15,9 @@ class FavoriteController extends Controller
             'animal_id' => 'required|integer|exists:animals,id',
         ]);
 
-        $existingFavorite = Favorite::where('user_token', $request->token)
+        $user = JWTAuth::toUser($request->user_token)->id;
+
+        $existingFavorite = Favorite::where('user_token', $user)
             ->where('animal_id', $request->animal_id)
             ->first();
 
@@ -23,7 +26,7 @@ class FavoriteController extends Controller
         }
 
         $favorite = Favorite::create([
-            'user_token' => $request->token,
+            'user_id' => $user,
             'animal_id' => $request->animal_id,
         ]);
 
